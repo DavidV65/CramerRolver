@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Resolución de Sistema de 2 Ecuaciones - Regla de Cramer</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      background-image: url('img/fondo.jpg'); 
+      padding: 30px;
+      margin: 0;
+    }
+    .container {
+      max-width: 500px;
+      margin: 50px auto;
+      padding: 30px;
+      background: rgba(255, 255, 255, 0.8); 
+      border-radius: 20px;
+      box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+      text-align: center;
+    }
+    h2 {
+        background-image: linear-gradient(
+            150deg,
+            #9500ff,
+            #09f,
+            #00DDFF);
+  
+      font-size: 24px;
+      margin-bottom: 20px;
+      font-weight: bold;
+    }
+    label {
+      font-size: 16px;
+      color: #333;
+      margin-bottom: 5px;
+    }
+    input[type="number"] {
+      width: 90px;
+      padding: 10px;
+      margin: 10px 15px;
+      border-radius: 10px;
+      border: 2px solid #ff7a8d;
+      font-size: 16px;
+      text-align: center;
+    }
+    button {
+    width: 100%;
+    border: 0;
+    background-image: linear-gradient(150deg, #9500ff, #09f, #00DDFF); 
+    border-radius: 8px;
+    color: #fff;
+    display: flex;
+    font-size: 18px;
+    padding: 4px;
+    cursor: pointer;
+    transition: .3s;
+    position: relative; 
+}
+
+button span {
+    width: 100%;
+    background-color: #111; 
+    padding: 16px 24px;
+    border-radius: 6px;
+    transition: background-color 0.3s ease, background-image 0.3s ease; 
+    top: 0;
+    left: 0;
+}
+
+button:hover span {
+    background-color: transparent; 
+    background-image: linear-gradient(150deg, #9500ff, #09f, #00DDFF); 
+}
+
+button:active {
+    width: 100%;
+    transform: scale(0.9); 
+}
+    #resultado {
+      margin-top: 25px;
+      font-size: 20px;
+      font-weight: bold;
+      color: #333;
+      text-align: center;
+    }
+    .gif-container {
+      margin-top: 20px;
+      text-align: center;
+    }
+    img {
+      width: 150px;
+      height: auto;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Sistema de 2 ecuaciones con la Regla de Cramer</h2>
+    <p>Formula: a1x + b1y = c1<br>    a2x + b2y = c2</p>
+    <p>Ingresa los coeficientes para encontrar la solución:</p>
+
+    <div>
+      <label>Ecuación 1:</label><br>
+      <input type="number" id="a1" placeholder="a1">x +
+      <input type="number" id="b1" placeholder="b1">y =
+      <input type="number" id="c1" placeholder="c1">
+    </div>
+
+    <div>
+      <label>Ecuación 2:</label><br>
+      <input type="number" id="a2" placeholder="a2">x +
+      <input type="number" id="b2" placeholder="b2">y =
+      <input type="number" id="c2" placeholder="c2">
+    </div>
+
+    <button onclick="resolverSistema()" ><span>Resolver</span></button>
+
+    <div id="resultado"></div>
+    <div class="gif-container" id="gifResultado"></div>
+  </div>
+
+  <script>
+    function resolverSistema() {
+      const a1 = parseFloat(document.getElementById("a1").value);
+      const b1 = parseFloat(document.getElementById("b1").value);
+      const c1 = parseFloat(document.getElementById("c1").value);
+      const a2 = parseFloat(document.getElementById("a2").value);
+      const b2 = parseFloat(document.getElementById("b2").value);
+      const c2 = parseFloat(document.getElementById("c2").value);
+
+      const resultado = document.getElementById("resultado");
+      const gifResultado = document.getElementById("gifResultado");
+
+      // Determinante principal D
+      const D = a1 * b2 - a2 * b1;
+
+      // Si el determinante es 0, no tiene solución única
+      if (D === 0) {
+        resultado.innerHTML = "¡Ups! El sistema no tiene solución única.";
+        resultado.style.color = "#111";
+        gifResultado.innerHTML = '<img src="img/NoSolucion.gif" alt="No solución">';
+        return;
+      }
+
+      // Determinantes Dx y Dy
+      const Dx = c1 * b2 - c2 * b1;
+      const Dy = a1 * c2 - a2 * c1;
+
+      // Soluciones
+      const x = Dx / D;
+      const y = Dy / D;
+
+      resultado.innerHTML = `La solución es:<br><strong>x = ${x.toFixed(2)}</strong><br><strong>y = ${y.toFixed(2)}</strong>`;
+      resultado.style.color = "#333";
+
+      // Mostrar un gif dependiendo de los resultados
+      if (x && y) {
+        gifResultado.innerHTML = '<img src="img/Solucion.gif" alt="Solución encontrada">';
+      } else {
+        gifResultado.innerHTML = '<img src="img/Nada.gif" alt="Otros resultados">';
+      }
+    }
+  </script>
+</body>
+</html>
